@@ -5,24 +5,23 @@ import { prepareModuleSections, type PrepareModuleSectionsOptions } from "../mod
 import { createSidebarPages } from "../navigation";
 
 export const componentModuleOptions: Omit<PrepareModuleSectionsOptions, "declarationLinkPath"> = {
-	extensionsInterfaceName: "ComponentExtensions",
-	modulePrefix: "component/extensions/",
-	rootModuleName: "component/Component",
+	extensionsInterfaceName: "MarkerExtensions",
+	rootModuleName: "component/Marker",
 	stripDefaultExports: true,
 } as const;
 
 export default Document((doc, project, path) => {
-	doc.setTitle("Component - kitsui");
+	doc.setTitle("Marker - kitsui");
 
 	const prepared = prepareModuleSections(project, { ...componentModuleOptions, declarationLinkPath: path });
 	setTypeNameAliases(prepared.nameAliases);
 	setTypeDeclarationLinks(prepared.declarationLinks, prepared.declarationLinksById);
 
 	return ApiModulePage({
-		heading: "Component",
+		heading: "Marker",
 		path,
 		pages: createSidebarPages(project),
 		sections: prepared.sections,
-		summary: "The core building block for creating and managing DOM elements with owned lifecycle, reactive state, and composable extensions.",
+		summary: "A wrapper around a DOM comment used where an actual DOM element is not needed.",
 	});
 });
