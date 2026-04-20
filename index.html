@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style >@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
+* { box-sizing: border-box; margin: 0; padding: 0 }
+*::before { box-sizing: border-box }
+*::after { box-sizing: border-box }
+::view-transition-old(root) { animation-name: none; opacity: 1 }
+::view-transition-group(root) { animation-name: none }
+::view-transition-new(root) { animation-name: none; opacity: 1 }
+::view-transition-group(docs-header) { animation-duration: 0.2s; animation-timing-function: ease-out }
+::view-transition-old(docs-header) { opacity: 0.9 }
+::view-transition-new(docs-header) { opacity: 1 }
+::view-transition-group(docs-main) { animation-duration: 0.24s; animation-timing-function: ease-out }
+::view-transition-old(docs-main) { opacity: 0.85 }
+::view-transition-new(docs-main) { opacity: 1 }
+.docs-layout-page { background: var(--bg-page); color: var(--text-primary); display: flex; flex-direction: column; font-family: var(--font-sans); font-size: 17px; line-height: 1.6; min-height: 100vh }
+.docs-home-hero { border-bottom: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px; padding-bottom: 20px }
+.docs-home-title { color: var(--text-bright); font-size: 31px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2 }
+.docs-home-summary { color: var(--text-subtle); font-size: 15px; line-height: 1.5 }
+.docs-theme { --accent-primary: light-dark( #2e7d32, #a3e635); --accent-returns: light-dark( #1565c0, #60a5fa); --accent-throws: light-dark( #c62828, #f87171); --bg-code-block: light-dark( #f3f3f3, #111); --bg-page: light-dark( #fafafa, #0d0d0d); --bg-raised: light-dark( #e0e0e0, #1a1a1a); --bg-surface: light-dark( #eaeaea, #161616); --border-code: light-dark( #d0d0d0, #222); --border-muted: light-dark( #c0c0c0, #333); --border-subtle: light-dark( #ddd, #1a1a1a); --font-mono: 'JetBrains Mono', 'Fira Code', monospace; --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; --syntax-keyword: light-dark( #4a7fa8, #7aafe0); --syntax-literal: light-dark( #b8860b, #f59e0b); --syntax-method: light-dark( #7b1fa2, #c084fc); --syntax-punctuation: light-dark( #999, #666); --syntax-reference: light-dark( #1565c0, #60a5fa); --syntax-type: light-dark( #2e7d32, #a3e635); --text-body: light-dark( #333, #ccc); --text-bright: light-dark( #111, #fff); --text-dim: light-dark( #999, #666); --text-muted: light-dark( #666, #aaa); --text-primary: light-dark( #1a1a1a, #e4e4e4); --text-secondary: light-dark( #777, #888); --text-subtle: light-dark( #888, #777); color-scheme: light dark }
+.docs-footer { border-top: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; margin-top: 48px; padding: 16px 20px 24px }
+.docs-footer-inner { margin: 0 auto; max-width: 1120px; width: 100% }
+.docs-header { border-bottom: 1px solid var(--border-subtle); padding: 14px 20px; view-transition-name: docs-header }
+.docs-header-inner { align-items: center; display: flex; gap: 16px; justify-content: space-between; margin: 0 auto; max-width: 1120px; width: 100% }
+.docs-header-left { align-items: center; display: flex; gap: 16px }
+.docs-header-right { align-items: center; display: flex; gap: 16px }
+.docs-header-link { border-radius: 999px; color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; font-weight: 600; padding: 6px 10px; text-decoration: none; transition: background 0.15s, color 0.15s }
+.docs-header-link:hover { background: var(--bg-surface); color: var(--text-primary) }
+.docs-header-link-active { background: var(--bg-surface); color: var(--accent-primary) }
+.docs-header-brand { color: var(--text-primary); font-family: var(--font-mono); font-size: 20px; font-weight: 700; letter-spacing: 0.02em; text-decoration: none }
+.docs-header-note { color: var(--text-secondary); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase }
+.docs-sidebar { display: flex; flex-direction: column; gap: 4px; position: sticky; top: 24px }
+.docs-sidebar-label { color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 12px 10px 6px; text-transform: uppercase }
+.docs-sidebar-link { border-radius: 6px; color: var(--text-muted); display: block; font-size: 14px; padding: 6px 10px; text-decoration: none; transition: background 0.15s, color 0.15s }
+.docs-sidebar-link:hover { background: var(--bg-surface); color: var(--text-primary) }
+.docs-sidebar-link-active { background: var(--bg-surface); color: var(--accent-primary) }
+.docs-sidebar-sections { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; margin-left: 14px; margin-top: 2px; transform-origin: top }
+.docs-sidebar-section-link { border-radius: 6px; color: var(--text-secondary); display: block; font-size: 12px; padding: 3px 8px; text-decoration: none; transition: background 0.15s, color 0.15s }
+.docs-sidebar-section-link:hover { background: var(--bg-surface); color: var(--text-primary) }
+.docs-layout-shell { display: flex; flex-grow: 1; gap: 24px; margin: 0 auto; max-width: 1120px; padding: 24px 20px 0; width: 100% }
+.docs-layout-sidebar-wrap { flex: 0 0 220px; min-width: 0 }
+.docs-layout-main { display: flex; flex: 1 1 0; min-width: 0; view-transition-name: docs-main }
+.docs-layout-content { display: flex; flex-direction: column; gap: 20px; width: 100% }
+.docs-type { color: var(--syntax-type); font-family: var(--font-mono); font-size: 14px }
+.docs-type-keyword { color: var(--syntax-keyword) }
+.docs-type-punctuation { color: var(--syntax-punctuation) }
+.docs-type-literal { color: var(--syntax-literal) }
+.docs-type-reference { color: var(--syntax-reference) }
+.docs-type-reference-link { text-decoration: none }
+.docs-type-error { color: var(--accent-throws) }
+.docs-type-function { color: var(--syntax-method) }
+.docs-type-param-name { color: var(--text-primary) }
+.docs-comment { color: var(--text-body); font-size: 15px; line-height: 1.6 }
+.docs-comment-block-tag { align-items: flex-start; display: flex; gap: 6px }
+.docs-comment-tag-icon { flex-shrink: 0; height: 16px; margin-top: 2px; width: 16px }
+.docs-comment-tag-content { flex: 1; min-width: 0 }
+.docs-comment-type-annotation { background: var(--bg-surface); border: 1px solid var(--border-code); border-radius: 4px; font-family: var(--font-mono); font-size: 13px; margin-right: 6px; padding: 2px 5px }
+.docs-comment-code { background: var(--bg-surface); border: 1px solid var(--border-code); border-radius: 4px; color: var(--accent-primary); font-family: var(--font-mono); font-size: 13px; padding: 2px 5px }
+.docs-comment-link { text-decoration: none }
+.docs-comment-code-block { background: var(--bg-code-block); border: 1px solid var(--border-subtle); border-radius: 6px; color: var(--text-body); display: block; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; margin: 8px 0; margin-left: -14px; overflow: auto; padding: 10px 14px; white-space: pre }
+.docs-comment-icon-returns { color: var(--accent-returns) }
+.docs-comment-icon-throws { color: var(--accent-throws) }
+.docs-flag { background: var(--bg-raised); border: 1px solid var(--border-muted); border-radius: 4px; color: var(--text-muted); font-size: 12px; line-height: 1; padding: 2px 6px }
+.docs-flags { display: inline-flex; gap: 4px }
+.docs-parameter { display: inline }
+.docs-parameter-name { color: var(--text-primary); font-weight: 600 }
+.docs-type-parameter { display: inline }
+.docs-type-parameter-name { color: var(--syntax-method); font-weight: 600 }
+.docs-signature { --docs-accent: var(--syntax-method); display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding-block: 12px; position: relative; z-index: 1 }
+.docs-signature::before { background: linear-gradient(to right, var(--docs-accent), transparent); background-position: -200% 0; background-size: 300% 100%; border-left: 2px solid var(--docs-accent); content: ''; display: block; inset: 0; left: -24px; opacity: 0.4; position: absolute; z-index: -1 }
+.docs-signature-accent-method { --docs-accent: var(--syntax-method) }
+.docs-signature-accent-type { --docs-accent: var(--syntax-type) }
+.docs-signature-accent-reference { --docs-accent: var(--syntax-reference) }
+.docs-signature-accent-literal { --docs-accent: var(--syntax-literal) }
+.docs-signature-accent-keyword { --docs-accent: var(--syntax-keyword) }
+.docs-signature-accent-property { --docs-accent: var(--text-primary) }
+.docs-signature-code { background: var(--bg-code-block); border: 1px solid var(--border-subtle); border-radius: 6px; color: var(--text-primary); font-family: var(--font-mono); font-size: 14px; line-height: 1.6; margin-left: -14px; overflow: auto; padding: 10px 14px }
+.docs-signature-punctuation { color: var(--syntax-punctuation) }
+.docs-signature-name { color: var(--syntax-method); font-weight: 600 }
+.docs-signature-params { display: flex; flex-direction: column; gap: 6px; padding-left: 24px }
+.docs-signature-param-row { display: flex; gap: 8px }
+.docs-source-link { color: var(--text-dim); font-family: var(--font-mono); font-size: 13px; text-decoration: none }
+.docs-declaration { border-top: 1px solid var(--border-subtle); padding-block: 16px; padding-left: 26px; scroll-margin-top: var(--docs-declaration-sticky-top) }
+.docs-declaration:not(:open) { --declaration-title-font-style: italic }
+.docs-declaration-collapsed { padding-block: 4px }
+.docs-declaration-collapsed:first-child { padding-top: 8px }
+.docs-declaration-collapsed:not(:first-child) { border-top: none }
+.docs-declaration-contents { display: flex; flex-direction: column; gap: 10px; padding-top: 10px }
+.docs-declaration-relationships { align-items: center; display: flex; flex-wrap: wrap; gap: 8px; margin-left: -2px; min-height: 24px }
+.docs-declaration-relationship-label { color: var(--syntax-keyword); font-family: var(--font-mono); font-size: 13px; font-weight: 700; text-transform: lowercase }
+.docs-declaration-relationship-list { align-items: center; display: inline-flex; flex-wrap: wrap; gap: 6px }
+.docs-declaration-relationship-separator { color: var(--syntax-punctuation) }
+.docs-declaration-header { align-items: center; background: linear-gradient(to bottom, var(--bg-page) 60%, transparent); container-name: declaration-header; container-type: scroll-state; display: flex; font-style: var(--declaration-title-font-style, none); gap: 8px; margin-bottom: -17px; margin-left: -30px; min-height: 42px; padding: 6px 0; position: sticky; top: var(--docs-declaration-sticky-top, 0px); z-index: var(--docs-declaration-sticky-z, 1) }
+.docs-declaration-header-overlay { inset: 0; opacity: 0; position: absolute; transition: opacity 0.1s; z-index: -1 }
+@container declaration-header scroll-state((stuck: left) or (stuck: right) or (stuck: top) or (stuck: bottom)) {
+.docs-declaration-header-overlay { background: var(--bg-page); border-bottom: 1px solid var(--border-subtle); opacity: 1 }
+}
+.docs-declaration-collapsed-link { --declaration-collapsed-arrow-x: 0px; background: transparent; cursor: pointer; font-style: normal; margin-bottom: 0; position: relative; text-decoration: none; top: auto; width: fit-content; z-index: 1 }
+.docs-declaration-collapsed-link::before { background: var(--bg-surface); border-radius: 6px; content: ""; display: block; inset-block: 0; inset-inline: -12px; opacity: 0; position: absolute; transition: opacity 0.15s; z-index: -1 }
+.docs-declaration-collapsed-link:hover { --declaration-collapsed-arrow-x: 2px }
+.docs-declaration-collapsed-link:hover::before { opacity: 1 }
+.docs-declaration-collapsed-arrow { color: var(--text-dim); display: inline-flex; height: 24px; padding-right: 6px; transform: translateX(var(--declaration-collapsed-arrow-x)); transition: transform 0.12s, color 0.12s }
+.docs-declaration-name { color: var(--text-primary); font-family: var(--font-mono); font-size: 18px; font-weight: 700; white-space: nowrap }
+.docs-declaration-anchor { color: var(--text-dim); font-size: 14px; font-weight: 600; text-decoration: none }
+.docs-declaration-anchor:hover { color: var(--text-primary) }
+.docs-declaration-kind-icon { align-items: center; border-radius: 4px; display: inline-flex; flex-shrink: 0; height: 22px; justify-content: center; width: 22px }
+.docs-kind-type { color: var(--syntax-type) }
+.docs-kind-method { color: var(--syntax-method) }
+.docs-kind-reference { color: var(--syntax-reference) }
+.docs-kind-literal { color: var(--syntax-literal) }
+.docs-kind-keyword { color: var(--syntax-keyword) }
+.docs-kind-property { color: var(--text-primary) }
+.docs-declaration-type { background: var(--bg-code-block); border: 1px solid var(--border-subtle); border-radius: 6px; color: var(--text-secondary); font-family: var(--font-mono); font-size: 14px; margin-left: -14px; overflow: auto; padding: 10px 14px }
+.docs-declaration-keyword { color: var(--syntax-punctuation) }
+.docs-declaration-var-name { color: var(--text-primary); font-weight: 600 }
+.docs-declaration-ref-name { color: var(--syntax-reference); font-weight: 600 }
+.docs-declaration-method-name { color: var(--syntax-method); font-weight: 600 }
+.docs-declaration-type-punctuation { color: var(--syntax-punctuation) }
+.docs-declaration-children { display: flex; flex-direction: column }
+.docs-declaration-signatures { display: flex; flex-direction: column; gap: 12px }
+.docs-declaration-fancy { --docs-accent: var(--syntax-method); display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding-block: 12px; position: relative; z-index: 1 }
+.docs-declaration-fancy::before { background: linear-gradient(to right, var(--docs-accent), transparent); background-position: -200% 0; background-size: 300% 100%; border-left: 2px solid var(--docs-accent); content: ''; display: block; inset: 0; left: -24px; opacity: 0.4; position: absolute; z-index: -1 }
+.docs-declaration-fancy-accent-method { --docs-accent: var(--syntax-method) }
+.docs-declaration-fancy-accent-type { --docs-accent: var(--syntax-type) }
+.docs-declaration-fancy-accent-reference { --docs-accent: var(--syntax-reference) }
+.docs-declaration-fancy-accent-literal { --docs-accent: var(--syntax-literal) }
+.docs-declaration-fancy-accent-keyword { --docs-accent: var(--syntax-keyword) }
+.docs-declaration-fancy-accent-property { --docs-accent: var(--text-primary) }
+.docs-component-section { display: flex; flex-direction: column; gap: 4px }
+.docs-component-section-title { color: var(--text-bright); font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-top: 16px }
+.docs-component-hero { border-bottom: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px; padding-bottom: 20px }
+.docs-component-title { color: var(--text-bright); font-size: 31px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2 }
+.docs-component-summary { color: var(--text-subtle); font-size: 15px; line-height: 1.5 }
+.docs-home-article { color: var(--text-body); font-size: 15px; line-height: 1.7 }
+.docs-home-article h1 { color: var(--text-bright); font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 28px 0 12px }
+.docs-home-article h1:first-child { margin-top: 0 }
+.docs-home-article h2 { color: var(--text-primary); font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin: 24px 0 10px }
+.docs-home-article h3 { color: var(--text-body); font-size: 17px; font-weight: 600; margin: 20px 0 8px }
+.docs-home-article p { margin: 0 0 12px }
+.docs-home-article ul { margin: 0 0 12px; padding-left: 20px }
+.docs-home-article ol { margin: 0 0 12px; padding-left: 20px }
+.docs-home-article li { margin: 0 0 4px }
+.docs-home-article code { background: var(--bg-surface); border: 1px solid var(--border-code); border-radius: 4px; color: var(--accent-primary); font-family: var(--font-mono); font-size: 13px; padding: 2px 5px }
+.docs-home-article pre { background: var(--bg-code-block); border: 1px solid var(--border-subtle); border-radius: 8px; margin: 0 0 16px; overflow-x: auto; padding: 16px }
+.docs-home-article pre code { background: none; border: none; color: var(--text-body); font-size: 14px; padding: 0 }
+.docs-home-article a { color: var(--accent-primary); text-decoration: none }
+.docs-home-article a:hover { text-decoration: underline }
+.docs-home-article strong { color: var(--text-primary) }
+.docs-editor-wrap { display: flex; flex: 1 1 0; flex-direction: column; gap: 8px; min-width: 0 }
+.docs-editor-toolbar { align-items: center; display: flex; gap: 8px }
+.docs-editor-label { color: var(--text-secondary); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase }
+.docs-editor-select { background: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 6px; color: var(--text-primary); font-size: 13px; padding: 4px 8px }
+.docs-editor-container { border: 1px solid var(--border-subtle); border-radius: 8px; flex: 1 1 0; min-height: 320px; overflow: hidden }
+.docs-editor-result-wrap { display: flex; flex: 1 1 0; flex-direction: column; gap: 8px; min-width: 0 }
+.docs-editor-result-label { color: var(--text-secondary); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase }
+.docs-editor-result-panel { background: var(--bg-page); border: 1px solid var(--border-subtle); border-radius: 8px; flex: 1 1 0; min-height: 320px; overflow: auto; padding: 24px }
+.docs-playground-main { display: flex; flex: 1 1 0; min-height: 0; min-width: 0; padding: 20px; view-transition-name: docs-main }
+.docs-playground-content { display: flex; flex: 1 1 0; min-height: 0; min-width: 0; width: 100% }
+.docs-playground-shell { align-items: stretch; display: flex; flex: 1 1 0; flex-wrap: wrap; gap: 20px; min-height: 0; min-width: 0; width: 100% }
+.docs-body { margin: 0 }
+.docs-declaration-depth-0 { --docs-declaration-sticky-top: 0px; --docs-declaration-sticky-z: 200 }
+.docs-declaration-depth-1 { --docs-declaration-sticky-top: 42px; --docs-declaration-sticky-z: 199 }
+</style><!--kitsui:style-import-27--><!--kitsui:style-import-28--><!--kitsui:style-reset-29--><!--kitsui:style-selector-30--><!--kitsui:style-selector-31--><!--kitsui:style-selector-32--><!--kitsui:style-selector-33--><!--kitsui:style-selector-34--><!--kitsui:style-selector-35--><!--kitsui:style-selector-36--><!--kitsui:style-selector-37--><!--kitsui:style-selector-38--><title>kitsui</title></head><body class="docs-body"><div class="docs-theme docs-layout-page"><header class="docs-header"><div class="docs-header-inner"><div class="docs-header-left"><a class="docs-header-brand" href="index.html">kitsui</a><span class="docs-header-note">docs</span></div><div class="docs-header-right"><a class="docs-header-link" href="playground.html">Playground</a></div></div></header><div class="docs-layout-shell"><div class="docs-layout-sidebar-wrap"><nav class="docs-sidebar"><span class="docs-sidebar-label">Pages</span><a class="docs-sidebar-link docs-sidebar-link-active" href="index.html">Overview</a><a class="docs-sidebar-link" href="Component.html">Component</a><a class="docs-sidebar-link" href="State.html">State</a><a class="docs-sidebar-link" href="Style.html">Style</a><a class="docs-sidebar-link" href="Marker.html">Marker</a><a class="docs-sidebar-link" href="ClassManipulator.html">ClassManipulator</a><a class="docs-sidebar-link" href="AttributeManipulator.html">AttributeManipulator</a><a class="docs-sidebar-link" href="AriaManipulator.html">AriaManipulator</a><a class="docs-sidebar-link" href="TextManipulator.html">TextManipulator</a><a class="docs-sidebar-link" href="EventManipulator.html">EventManipulator</a></nav></div><main class="docs-layout-main" role="main"><div class="docs-layout-content"><section class="docs-home-hero"><h1 class="docs-home-title">kitsui</h1><p class="docs-home-summary">A DOM-first UI library built around owned components and reactive state. These docs are generated by kitsui itself.</p></section><article class="docs-home-article"><h1>kitsui</h1>
+<p>kitsui is a DOM-first UI library built around owned <code>Component</code> and <code>State</code> objects. A <code>Component</code> wraps a real <code>HTMLElement</code>; a <code>State</code> is an owned reactive value.</p>
+<h2>Preferred Style</h2>
+<ul>
+<li>Write small factory functions that return a <code>Component</code>.</li>
+<li>Build most structure in one fluent chain, then use targeted manipulators for classes, attributes, and ARIA.</li>
+<li>Create <code>State</code> inside the component or owner that should dispose it.</li>
+<li>Use derived state and conditional helpers instead of manual DOM bookkeeping.</li>
+<li>Prefer <code>Style</code> objects over raw class strings once styling becomes reusable.</li>
+</ul>
+<h2>A Typical Component</h2>
+<pre><code class="language-js">import { Component, State, Style } from "kitsui"
+
+const counterStyle = Style.Class("counter", {
+	alignItems: "center",
+	display: "flex",
+	gap: 8,
+})
+
+function Counter() {
+	const root = Component("section").class.add(counterStyle)
+	
+	const count = State(root, 0)
+	const doubled = count.map(root, (value) =&gt; value * 2)
+	const countText = count.map(root, (value) =&gt; `Count: ${value}`)
+	const doubledText = doubled.map(root, (value) =&gt; `Double: ${value}`)
+	const atLimit = count.map(root, (value) =&gt; value &gt;= 10)
+
+	const value = Component("output")
+		.text.set(countText)
+		.appendTo(root)
+
+	const button = Component("button")
+		.text.set("Increment")
+		.attribute.set("type", "button")
+		.attribute.bind(atLimit, "disabled")
+		.event.owned.on.click(() =&gt; {
+			count.update((value) =&gt; value + 1);
+		})
+		.appendTo(root)
+		
+	const note = Component("small")
+		.text.set(doubledText)
+		.appendToWhen(count.truthy, root)
+
+	return root
+}
+
+Counter().appendTo(document.body);
+</code></pre>
+<p>This style keeps ownership simple: <code>root</code> owns the state and child components, so removing <code>root</code> also disposes the whole subtree.</p>
+<h2>State-Driven Rendering</h2>
+<p>Use <code>use(state, render)</code> when you already have a component and want state to mutate it. Use <code>append</code>, <code>prepend</code>, or <code>insert</code> with a stateful component selection when the state should swap whole child selections.</p>
+<pre><code class="language-js">const list = Component("ul")
+const rows = State(list, null)
+const alpha = Component("li").text.set("alpha")
+const beta = Component("li").text.set("beta")
+
+list.append(rows);
+
+rows.set([
+	alpha,
+	beta,
+])
+
+rows.set(null)
+</code></pre>
+<p>Use <code>appendWhen</code>, <code>prependWhen</code>, and <code>insertWhen</code> when a specific child should be shown and hidden without being recreated each time. kitsui parks the node off-DOM until it is shown again, and disposes it when the returned cleanup runs or the owner is removed.</p>
+<h2>Placement And Movement</h2>
+<p><code>appendTo</code>, <code>prependTo</code>, and <code>insertTo</code> move an existing component relative to another component, node, or placement marker. Their <code>*When</code> variants make placement conditional. <code>place</code> is the low-level escape hatch when the location itself is reactive.</p>
+<pre><code class="language-js">const root = Component("section")
+const left = Component("div").appendTo(root)
+const right = Component("div").appendTo(root)
+const side = State(root, "left")
+const badge = Component("span").text.set("moving")
+
+badge.place(root, (Place) =&gt; {
+	const leftPlace = Place().appendTo(left)
+	const rightPlace = Place().appendTo(right)
+	return side.map(root, (value) =&gt; value === "left" ? leftPlace : rightPlace)
+})
+</code></pre>
+<h2>Styles, Classes, Attributes</h2>
+<p><code>Style</code> registers reusable CSS classes. <code>Style({ ... })</code> creates reusable style definition fragments that can be spread into multiple class definitions to reduce duplication. <code>component.class</code> applies and removes those <code>Style</code> objects, including reactive style selections. <code>component.attribute</code> manages both valueless and valued attributes, including reactive names and values.</p>
+<pre><code class="language-js">const baseCard = Style({
+	borderRadius: 8,
+	padding: 12,
+})
+
+const card = Style.Class("card", {
+	...baseCard,
+	$accent: "#0a7",
+	border: "1px solid $accent",
+})
+
+const raised = Style.after(card).Class("card-raised", {
+	...baseCard,
+	boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
+})
+
+const panel = Component("section")
+	.class.add(card)
+	.use((panel) =&gt; {
+		const elevated = State(panel, false)
+		const selected = State(panel, false)
+
+		panel
+			.class.bind(elevated, raised)
+			.attribute.set("data-kind", "card")
+			.attribute.bind(selected, { name: "aria-selected", value: "true" })
+	});
+</code></pre>
+<p>If you need ARIA-specific helpers, <code>component.aria</code> provides typed wrappers around common ARIA attributes such as role, label, references, booleans, <code>current</code>, and <code>live</code>.</p>
+<h2>Derived State</h2>
+<p>The mapping extension is central to succinct code:</p>
+<ul>
+<li><code>state.map(owner, fn)</code> creates a derived state owned by <code>owner</code>.</li>
+<li><code>state.truthy</code> and <code>state.falsy</code> provide memoized boolean states.</li>
+<li><code>state.or(getValue)</code> replaces <code>null</code> and <code>undefined</code> with a lazily computed fallback.</li>
+<li><code>State.Group(owner, states)</code> creates a grouped state that snapshots multiple states and emits one next-tick update per tick.</li>
+</ul>
+<p>Prefer these over ad hoc listeners when the result is still state.</p>
+<pre><code class="language-js">const owner = Component("section")
+const count = State(owner, 0)
+const label = State(owner, "zero")
+const grouped = State.Group(owner, { count, label })
+
+count.set(1)
+label.set("one")
+// grouped updates next tick with { count: 1, label: "one" }
+</code></pre>
+<h2>Key API Surface</h2>
+<p><code>Component</code></p>
+<ul>
+<li><code>Component(tagNameOrElement)</code>, <code>Component.wrap(element)</code>, <code>Component.extend()</code></li>
+<li>Instance methods: <code>append</code>, <code>prepend</code>, <code>insert</code>, <code>appendWhen</code>, <code>prependWhen</code>, <code>insertWhen</code>, <code>clear</code>, <code>setAttribute</code>, <code>use</code>, <code>setOwner</code>, <code>getOwner</code>, <code>remove</code></li>
+<li>Extension methods: <code>appendTo</code>, <code>prependTo</code>, <code>insertTo</code>, <code>appendToWhen</code>, <code>prependToWhen</code>, <code>insertToWhen</code>, <code>place</code></li>
+<li>Accessors: <code>class</code>, <code>attribute</code>, <code>aria</code>, <code>text</code>, <code>event</code></li>
+</ul>
+<p><code>State</code> and <code>Owner</code></p>
+<ul>
+<li><code>State(owner, initialValue, options?)</code>, <code>State.extend()</code></li>
+<li><code>State.Group(owner, states)</code></li>
+<li>State methods: <code>set</code>, <code>update</code>, <code>setEquality</code>, <code>subscribeImmediate</code>, <code>subscribe</code>, <code>subscribeImmediateUnbound</code>, <code>subscribeUnbound</code></li>
+<li>Derived-state helpers: <code>map</code>, <code>truthy</code>, <code>falsy</code>, <code>or</code></li>
+<li>Lifecycle from <code>Owner</code>: <code>onCleanup</code>, <code>dispose</code>, <code>disposed</code></li>
+</ul>
+<p><code>Style</code> and Manipulators</p>
+<ul>
+<li><code>Style(definition)</code> (reusable fragment), <code>Style.Class(className, definition)</code>, <code>Style.after(...styles).Class(className, definition)</code></li>
+<li><code>ClassManipulator</code>: <code>add</code>, <code>remove</code>, <code>bind</code>, <code>addFrom</code></li>
+<li><code>AttributeManipulator</code>: <code>add</code>, <code>set</code>, <code>remove</code>, <code>bind</code></li>
+<li><code>TextManipulator</code>: <code>set</code>, <code>bind</code></li>
+<li><code>EventManipulator</code>: <code>on</code>, <code>off</code>, <code>owned</code></li>
+<li><code>AriaManipulator</code>: typed ARIA helpers layered on top of attributes</li>
+</ul>
+<p><code>Useful exported types</code></p>
+<ul>
+<li>Components: <code>ComponentRender</code>, <code>ComponentChild</code>, <code>AppendableComponentChild</code>, <code>ComponentSelection</code>, <code>ComponentSelectionState</code>, <code>InsertWhere</code>, <code>InsertableNode</code>, <code>InsertableSelection</code>, <code>InsertableComponentChild</code>, <code>ExtendableComponentClass</code></li>
+<li>Text: <code>TextValue</code>, <code>TextSelection</code>, <code>TextInput</code>, <code>TextSource</code></li>
+<li>State: <code>CleanupFunction</code>, <code>StateOptions</code>, <code>StateListener</code>, <code>StateUpdater</code>, <code>StateEqualityFunction</code>, <code>ExtendableStateClass</code></li>
+<li>Styling and attributes: <code>StyleDefinition</code>, <code>StyleValue</code>, <code>StyleInput</code>, <code>StyleSelection</code>, <code>Falsy</code>, <code>AttributeEntry</code>, <code>AttributeNameInput</code>, <code>AttributeNameSelection</code>, <code>AttributeValue</code>, <code>AttributeValueInput</code>, <code>AttributeValueSelection</code></li>
+<li>Placement: <code>Place</code>, <code>PlaceSource</code>, <code>PlacementTarget</code>, <code>PlacerFunction</code></li>
+<li>ARIA: the entrypoint also re-exports the typed ARIA unions and inputs used by <code>AriaManipulator</code>, including roles, booleans, references, <code>current</code>, and <code>live</code></li>
+</ul>
+<h2>Writing Succinct kitsui Code</h2>
+<ul>
+<li>Return <code>Component</code> instances from factory functions.</li>
+<li>Let ownership do cleanup work for you.</li>
+<li>Use <code>use(state, render)</code> for local view updates and derived state for reusable logic.</li>
+<li>Reach for <code>appendWhen</code> and stateful child selections before manual <code>subscribe</code> plus DOM mutation.</li>
+<li>Keep low-level DOM access for event handlers and genuinely custom behavior; let kitsui handle lifecycle and placement.</li>
+</ul>
+</article></div></main></div><footer class="docs-footer"><div class="docs-footer-inner">kitsui — generated with kitsui</div></footer></div><script type="module" src="kitsui.esm.js"></script><script type="module" src="client.js"></script></body></html>

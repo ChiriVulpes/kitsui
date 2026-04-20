@@ -1,0 +1,10 @@
+{
+	"examples": [
+		"append-when.ts",
+		"bind-manipulators.ts",
+		"counter.ts",
+		"mount-dispose.ts",
+		"place-iframe.ts",
+		"state-group.ts"
+	]
+}
