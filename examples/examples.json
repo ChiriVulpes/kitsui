@@ -3,6 +3,7 @@
 		"append-when.ts",
 		"bind-manipulators.ts",
 		"counter.ts",
+		"highly-accurate-fishing-simulator.ts",
 		"mount-dispose.ts",
 		"place-iframe.ts",
 		"state-group.ts"
