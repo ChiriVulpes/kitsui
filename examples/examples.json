@@ -2,6 +2,7 @@
 	"examples": [
 		"append-when.ts",
 		"bind-manipulators.ts",
+		"composition.ts",
 		"counter.ts",
 		"highly-accurate-fishing-simulator.ts",
 		"mount-dispose.ts",
