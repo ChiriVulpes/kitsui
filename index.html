@@ -251,6 +251,36 @@ if (composed.is(Button)) {
 	composed.setBusy(true)
 }
 </code></pre>
+<h3>Component-Specific Events</h3>
+<p>Base component events are only for events available on every component, such as <code>Mount</code> and <code>Dispose</code>. Feature-specific components should expose custom events through <code>Component.WithEvents&lt;Events&gt;</code> instead of augmenting the shared component event map.</p>
+<p>Custom kitsui component event names should be <code>PascalCase</code>, such as <code>DragStart</code> or <code>WidgetCommit</code>, so they stay distinct from native DOM events like <code>click</code> and <code>pointerdown</code>.</p>
+<pre><code class="language-ts">import { Component } from "kitsui"
+
+interface WidgetEvents {
+	WidgetCommit: CustomEvent&lt;{
+		readonly value: string
+	}&gt;
+}
+
+interface WidgetExtensions {
+	commit (value: string): this
+}
+
+interface Widget extends Component.WithEvents&lt;WidgetEvents&gt;, WidgetExtensions { }
+
+function emitWidgetCommit (widget: Widget, value: string): void {
+	widget.element.dispatchEvent(new CustomEvent("WidgetCommit", {
+		bubbles: true,
+		detail: { value },
+	}))
+}
+
+declare const widget: Widget
+
+widget.event.owned.on.WidgetCommit(event =&gt; {
+	event.detail.value.toUpperCase()
+})
+</code></pre>
 <h2>State And Derived Values</h2>
 <p>Use short-form derived state when the derived value is consumed immediately. Use owner-explicit derived state when the derived state is reused, grouped, passed around, or otherwise needs an obvious owner.</p>
 <p>Keep behavior and UI state consistent. A disabled button should not be the only thing enforcing an invariant.</p>
