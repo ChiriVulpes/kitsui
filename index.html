@@ -259,7 +259,9 @@ if (composed.is(Button)) {
 interface WidgetEvents {
 	WidgetCommit: CustomEvent&lt;{
 		readonly value: string
-	}&gt;
+	}&gt; &amp; {
+		readonly source: "user" | "api"
+	}
 }
 
 interface WidgetExtensions {
@@ -268,19 +270,23 @@ interface WidgetExtensions {
 
 interface Widget extends Component.WithEvents&lt;WidgetEvents&gt;, WidgetExtensions { }
 
-function emitWidgetCommit (widget: Widget, value: string): void {
-	widget.element.dispatchEvent(new CustomEvent("WidgetCommit", {
-		bubbles: true,
-		detail: { value },
-	}))
+function emitWidgetCommit (widget: Widget, value: string): boolean {
+	return widget.event.emit.WidgetCommit({ value }, {
+		tweak: event =&gt; Object.defineProperty(event, "source", {
+			value: "api",
+		}),
+	})
 }
 
 declare const widget: Widget
 
 widget.event.owned.on.WidgetCommit(event =&gt; {
 	event.detail.value.toUpperCase()
+	event.source
 })
 </code></pre>
+<p><code>event.emit.*</code> and <code>event.dispatch.*</code> are aliases that construct the mapped <code>CustomEvent</code>, run the optional <code>tweak</code> callback, and return the target's native <code>dispatchEvent</code> result. Native <code>CustomEvent</code> defaults are preserved, so kitsui custom events do not bubble unless <code>bubbles: true</code> is explicitly supplied. Bubbling does not add the feature event to ancestor component types; an ancestor must still opt into the event map before its typed <code>event</code> API exposes that name.</p>
+<p>Synchronous <code>Dispose</code> handlers may emit final custom notifications while the owner reports both <code>disposed</code> and <code>disposing</code>. This is a narrow lifecycle window: listener registration and other component mutations remain forbidden, and custom-event emission is rejected again after disposal finishes.</p>
 <h2>State And Derived Values</h2>
 <p>Use short-form derived state when the derived value is consumed immediately. Use owner-explicit derived state when the derived state is reused, grouped, passed around, or otherwise needs an obvious owner.</p>
 <p>Keep behavior and UI state consistent. A disabled button should not be the only thing enforcing an invariant.</p>
