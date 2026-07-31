@@ -200,6 +200,7 @@ Counter().appendTo(document.body)
 <ul>
 <li>Return <code>Component</code> instances from small factory functions.</li>
 <li>Create <code>State</code> on the component or owner that should dispose it.</li>
+<li>Use <code>Owner()</code> for a living scope that has no owning <code>Component</code>, then pass it to every owner-aware API in that scope.</li>
 <li>Use derived state, manipulators, and conditional placement before manual <code>subscribe</code> plus DOM mutation.</li>
 <li>Build most static structure in one fluent chain.</li>
 <li>Use <code>component.class</code>, <code>component.style</code>, <code>component.attribute</code>, <code>component.aria</code>, <code>component.text</code>, and <code>component.event</code> for DOM effects.</li>
@@ -312,6 +313,19 @@ Component("p")
 	.appendTo(root)
 </code></pre>
 <p>Use <code>State.Group(owner, states)</code> when one derived value needs a coherent snapshot of multiple states. Use <code>truthy</code>, <code>falsy</code>, and <code>or(...)</code> instead of writing repetitive boolean or nullish mapping by hand.</p>
+<h2>Standalone Owner Scopes</h2>
+<p>Use <code>Owner()</code> when a living scope does not have an owning <code>Component</code>. Pass the owner to <code>State</code> and other owner-aware APIs so the whole scope shares one lifetime. Dispose the owner when the scope ends.</p>
+<pre><code class="language-ts">const session = Owner()
+const status = State(session, "connecting")
+const label = status.map(session, value =&gt; `Status: ${value}`)
+
+label.subscribe(session, value =&gt; {
+	console.log(value)
+})
+
+session.dispose()
+</code></pre>
+<p>When a scope belongs to a UI subtree, use the <code>Component</code> as its owner. Integration helpers for routers, sockets, observers, and other systems can accept an <code>Owner</code> and use <code>owner.onCleanup(...)</code> internally; ordinary application code usually only passes the owner to the helper.</p>
 <h2>Manipulator Binding</h2>
 <p>Use manipulators for reactive DOM effects. A single state can drive text, class, raw attributes, typed ARIA attributes, and events without manual DOM bookkeeping.</p>
 <pre><code class="language-ts">const expandedStyle = Style.Class("panel-expanded", {
